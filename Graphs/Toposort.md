@@ -1,5 +1,6 @@
 ## Topological sorting
 Exists only for [DAG(Directed Acyclic Graph)](https://www.geeksforgeeks.org/dsa/introduction-to-directed-acyclic-graph/).
+
 Application:
 * Helps in scheduling tasks or events based on dependencies.
 * Detects cycles in a directed graph.

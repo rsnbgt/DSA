@@ -35,6 +35,6 @@ vector<int> bfsOfGraph(int V, vector<int> adj[]) {
     }
 };
 ```
->T=O(N+2E)
+>T=O(N+2E) for undirected and O(N+E) for directed
 
 >S=O(N)

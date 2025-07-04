@@ -5,7 +5,8 @@ Application:
 * Detects cycles in a directed graph.
 * Efficient for solving problems with precedence constraints.
 
-```cpp
+1. Using DFS
+	```cpp
 	void dfs(int node, int vis[], stack<int> &st,
 	         vector<int> adj[]) {
 		vis[node] = 1;
@@ -14,24 +15,60 @@ Application:
 		}
 		st.push(node);
 	}
-vector<int> topoSort(int V, vector<int> adj[])
-	{
-		int vis[V] = {0};
-		stack<int> st;
+	vector<int> topoSort(int V, vector<int> adj[])
+		{
+			int vis[V] = {0};
+			stack<int> st;
+			for (int i = 0; i < V; i++) {
+				if (!vis[i]) {
+					dfs(i, vis, st, adj);
+				}
+			}
+	
+			vector<int> ans;
+			while (!st.empty()) {
+				ans.push_back(st.top());
+				st.pop();
+			}
+			return ans;
+		}
+	```
+	>Tc:O(N+E)+O(N)
+
+	>Sc:O(N)
+
+2. Using BFS || kahn's Algorithm
+   ``` cpp
+   	vector<int> topoSort(int V, vector<int> adj[]){
+		int indegree[V] = {0};
 		for (int i = 0; i < V; i++) {
-			if (!vis[i]) {
-				dfs(i, vis, st, adj);
+			for (auto it : adj[i]) {
+				indegree[it]++;
 			}
 		}
 
-		vector<int> ans;
-		while (!st.empty()) {
-			ans.push_back(st.top());
-			st.pop();
+		queue<int> q;
+		for (int i = 0; i < V; i++) {
+			if (indegree[i] == 0) {
+				q.push(i);
+			}
 		}
-		return ans;
-	}
-```
->Tc:O(N+E)+O(N)
+		vector<int> topo;
+		while (!q.empty()) {
+			int node = q.front();
+			q.pop();
+			topo.push_back(node);
+			// node is in your topo sort
+			// so please remove it from the indegree
 
->Sc:O(2N)
+			for (auto it : adj[node]) {
+				indegree[it]--;
+				if (indegree[it] == 0) q.push(it);
+			}
+		}
+
+		return topo;
+	```
+	>Tc:O(N+E)+O(N)
+
+	>Sc:O(N)

@@ -1,3 +1,4 @@
+Approach 1:
 ``` cpp
 class Solution {
 public:
@@ -24,3 +25,30 @@ public:
     }
 };
 ```
+
+Approach 2 for permuataions:
+```cpp
+class Solution {
+public:
+    void helper(vector<int>& nums,vector<vector<int>>& ans,int n,int index){
+        if(index==n){
+            ans.push_back(nums);
+            return;
+        }
+
+        for(int i=index;i<n;i++){
+            swap(nums[i],nums[index]);
+            helper(nums,ans,n,index+1);
+            swap(nums[i],nums[index]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        helper(nums,ans,nums.size(),0);
+        return ans;
+    }
+};
+```
+> tc:n.n!
+
+>sc:n
